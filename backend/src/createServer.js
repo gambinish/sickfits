@@ -23,3 +23,12 @@ function createServer() {
 }
 
 module.exports = createServer;
+
+// NOTE: on initial startup, you will need to create placeholder variables in schema.graphQL
+// this is to "PAD" graphQL init process:
+        // type Mutation {
+        //   placeholder: String
+        // }
+        // type Query {
+        //   placeholder: String
+        // }
