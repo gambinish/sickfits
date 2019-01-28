@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/nicholas-k-gambino/sick-fits/dev
-# timestamp: Sat Jan 26 2019 12:38:10 GMT-1000 (HST)
+# timestamp: Sun Jan 27 2019 14:08:13 GMT-1000 (HST)
 
 type AggregateItem {
   count: Int!
