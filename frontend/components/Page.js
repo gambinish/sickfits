@@ -51,11 +51,11 @@ injectGlobal`
     line-height: 2;
     font-family: 'radnika_next';
   }
-  a{
+  a {
     text-decoration: none;
     color: ${theme.black};
   }
-`;
+`
 
 class Page extends Component {
   render() {

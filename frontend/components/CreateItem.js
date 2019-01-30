@@ -81,7 +81,7 @@ class CreateItem extends Component {
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="file">
                 File
-            <input
+                <input
                   type="file"
                   id="file"
                   name="file"
@@ -95,7 +95,7 @@ class CreateItem extends Component {
               </label>
               <label htmlFor="title">
                 Title
-            <input
+                <input
                   type="text"
                   id="title"
                   name="title"
@@ -106,7 +106,7 @@ class CreateItem extends Component {
               </label>
               <label htmlFor="price">
                 Price
-            <input
+                <input
                   type="number"
                   id="price"
                   name="price"
@@ -117,14 +117,13 @@ class CreateItem extends Component {
               </label>
               <label htmlFor="description">
                 Description
-            <textarea
+                <textarea
                   id="description"
                   name="description"
                   placeholder="Enter Description"
                   required
                   value={this.state.description}
-                  onChange={this.handleChange}
-                />
+                  onChange={this.handleChange} />
               </label>
               <button type="submit">
                 Submit
