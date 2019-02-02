@@ -16,16 +16,18 @@ const PAGINATION_QUERY = gql`
 `
 
 const Pagination = (props) => (
-  <PaginationStyles>
-    <Query query={PAGINATION_QUERY}>{({ data, loading, error }) => {
-      if (loading) return 'Loading...'
-      if (error) return <ErrorMessage />
-      const count = data.itemsConnection.aggregate.count;
-      const pages = Math.ceil(count / perPage);
-      return <p>Page 1 of {pages}</p>
-    }}</Query>
+  <Query query={PAGINATION_QUERY}>{({ data, loading, error }) => {
+    if (loading) return 'Loading...'
+    if (error) return <ErrorMessage />
+    const count = data.itemsConnection.aggregate.count;
+    const pages = Math.ceil(count / perPage);
+    return (
+      <PaginationStyles>
+        <p>Page {props.page} of {pages}</p>
+      </PaginationStyles>
+    )
+  }}</Query>
 
-  </PaginationStyles>
 )
 
 export default Pagination; 
