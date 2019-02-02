@@ -4,6 +4,8 @@ import { Query } from 'react-apollo';
 import PaginationStyles from './styles/PaginationStyles';
 import ErrorMessage from './ErrorMessage';
 import { perPage } from '../config';
+import Head from 'next/head';
+import Link from 'next/link';
 
 const PAGINATION_QUERY = gql`
  query PAGINATION_QUERY {
@@ -21,9 +23,30 @@ const Pagination = (props) => (
     if (error) return <ErrorMessage />
     const count = data.itemsConnection.aggregate.count;
     const pages = Math.ceil(count / perPage);
+    const page = props.page
     return (
       <PaginationStyles>
-        <p>Page {props.page} of {pages}</p>
+        <Head>
+          <title>
+            Sick Fits! {page} of {pages}
+          </title>
+        </Head>
+        <Link
+          prefetch
+          href={{
+            pathname: 'items',
+            query: { page: page - 1 }
+          }}>
+          <a className="prev" aria-disabled={page <= 1}>Prev</a>
+        </Link>
+        <p>Page {page} of {pages}</p>
+        <p>{count} Items Total</p>
+        <Link href={{
+          pathname: 'items',
+          query: { page: page + 1 }
+        }}>
+          <a className='prev' aria-disabled={page >= pages}>Next</a>
+        </Link>
       </PaginationStyles>
     )
   }}</Query>
