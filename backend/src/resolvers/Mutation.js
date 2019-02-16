@@ -1,4 +1,10 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const Mutations = {
+
+  // CRUD FLOW
+
   async createItem(parent, args, ctx, info) {
     // TODO: check if they are logged in
     // ctx context defined in createServer.js
@@ -31,7 +37,34 @@ const Mutations = {
     // TODO check if user has owns and has permissions
     // delete it
     return ctx.db.mutation.deleteItem({ where }, info);
-  }
+  },
+
+  // SIGN UP AUTHENTICATION FLOW
+
+  async signUp(parent, args, ctx, info) {
+    // lowercase email for sanity
+    args.email = args.email.toLowerCase();
+    // hash the password
+    const password = await bcrypt.hash(args.password, 12);
+    // create the user in the db
+    const user = await ctx.db.mutation.createUser({
+      data: {
+        ...args,
+        password,
+        permissions: { set: ['USER'] },
+
+      },
+    }, info);
+    // create JWT token to keep them signed in
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // set cookie on response
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
+    // return user to browser
+    return user;
+  },
 };
 
 module.exports = Mutations;
