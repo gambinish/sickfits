@@ -41,6 +41,8 @@ const Mutations = {
 
   // SIGN UP AUTHENTICATION FLOW
 
+
+  // TODO: 
   async signUp(parent, args, ctx, info) {
     // lowercase email for sanity
     args.email = args.email.toLowerCase();
@@ -52,7 +54,6 @@ const Mutations = {
         ...args,
         password,
         permissions: { set: ['USER'] },
-
       },
     }, info);
     // create JWT token to keep them signed in
