@@ -7,8 +7,10 @@ const Nav = () => (
     <User>
       {({ data: { me } }) => {
         console.log('DATA', me)
-        if (me)
+        if (me) {
           return <p>{me.name}</p>
+        }
+        else return null;
       }}
     </User>
     <Link href="/items">
