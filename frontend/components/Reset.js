@@ -40,10 +40,9 @@ class Reset extends Component {
           query: CURRENT_USER_QUERY
         }]}
       >
-        {/* 'called is a boolean that returns whether or not the function has been called */}
+        {/* 'called' is a boolean that returns whether or not the function has been called */}
         {(reset, { error, loading, called }) => (
           <Form method="post" onSubmit={async (e) => {
-            // TODO write logic for custom 'email already exists' error message
             e.preventDefault();
             const res = await reset();
             this.setState({ password: '', confirmPassword: '' });
