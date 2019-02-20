@@ -597,7 +597,7 @@ var SignOut = function SignOut(props) {
     }],
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 15
     },
     __self: this
   }, function (signOut) {
