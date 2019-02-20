@@ -87,6 +87,12 @@ const Mutations = {
     // return user
     return user;
   },
+  async signOut(parent, args, ctx, info) {
+    // this comes from cookiesParser library
+    ctx.response.clearCookie('token');
+    return { message: 'Goodby!' };
+  }
+
 };
 
 module.exports = Mutations;
