@@ -5,6 +5,7 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 // import email functions from mail.js
 const { transport, emailTemplate } = require('../mail');
+const { hasPermission } = require('../utils');
 
 const maxCookieAge = 1000 * 60 * 60 * 24 * 365; // 1 year cookie
 
@@ -177,6 +178,35 @@ const Mutations = {
     })
     // return the new user
     return updatedUser;
+  },
+  async updatePermissions(parent, args, ctx, info) {
+    // check if they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in!')
+    }
+    // query the current suer
+    const currentUser = await ctx.db.query.user({
+      where: {
+        id: ctx.request.userId,
+      },
+    },
+      info
+    );
+    // check if they have permissions to do this
+    hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']
+    );
+    // update the permissions
+    return ctx.db.mutation.updateUser({
+      data: {
+        permissions: {
+          // use set because permissions is a custom enum...this is from prisma library
+          set: args.permissions,
+        },
+      },
+      where: {
+        id: args.userId,
+      }
+    }, info)
   }
 };
 
