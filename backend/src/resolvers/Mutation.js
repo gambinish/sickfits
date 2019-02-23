@@ -48,10 +48,16 @@ const Mutations = {
     }, info);
   },
   async deleteItem(parent, args, ctx, info) {
+    // throw new Error('You do not have the correct permissions')
     const where = { id: args.id };
     // find item
-    const item = await ctx.db.query.item({ where }, `{id title}`);
+    const item = await ctx.db.query.item({ where }, `{id title user { id }}`);
     // TODO check if user has owns and has permissions
+    const ownsItem = item.user.id === ctx.request.userId;
+    const hasPermissions = ctx.request.user.permissions.some(permission => ['ADMIN', 'ITEMDELETE'].includes(permission));
+    if (!ownsItem || !hasPermission) {
+      throw new Error('You do not have the correct permissions')
+    }
     // delete it
     return ctx.db.mutation.deleteItem({ where }, info);
   },
